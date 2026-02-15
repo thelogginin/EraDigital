@@ -1,45 +1,70 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ERA DIGITAL</title>
-  <link rel="icon" href="https://i.imgur.com/ixTcqjR.png" />
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #eee;
-      overflow: hidden; /* Mencegah scroll ganda */
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-    .iframe-container {
-      width: 100%;
-      height: 100dvh; /* Menggunakan dvh agar pas di mobile browser */
-      overflow: hidden;
-    }
+<title>ERA DIGITAL</title>
+<link rel="icon" href="https://i.imgur.com/ixTcqjR.png"/>
 
-    iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<style>
+:root { --vh:100%; }
+
+html,body{
+  margin:0;
+  padding:0;
+  height:100%;
+  background:#eee;
+  overflow:hidden;
+}
+
+.iframe-container{
+  width:100%;
+  height:calc(var(--vh,1vh)*100);
+  overflow:hidden;
+}
+
+iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+</style>
 </head>
+
 <body>
-  <div class="iframe-container">
-    <iframe
-      id="app"
-      src="https://script.google.com/macros/s/AKfycbx4pcvKtLJDBqkfZ4eqQxsxqKbSPOSgy1MyyBtoz41nrn4XVdY20XOojeWuhmkwEz0j/exec"
-      scrolling="yes"
-      allowfullscreen="true"
-      webkitallowfullscreen="true"
-      mozallowfullscreen="true"
-      allow="fullscreen; camera; microphone; display-capture; geolocation;">
-    </iframe>
-  </div>
+
+<div class="iframe-container">
+<iframe
+  id="app"
+  src="https://script.google.com/macros/s/AKfycbx4pcvKtLJDBqkfZ4eqQxsxqKbSPOSgy1MyyBtoz41nrn4XVdY20XOojeWuhmkwEz0j/exec"
+  allow="camera; microphone; geolocation; fullscreen">
+</iframe>
+</div>
+
+<script>
+function setRealHeight(){
+  document.documentElement.style.setProperty(
+    '--vh',
+    window.innerHeight * 0.01 + 'px'
+  );
+}
+window.addEventListener('resize', setRealHeight);
+setRealHeight();
+
+window.onload=function(){
+  document.getElementById("app").focus();
+};
+
+document.addEventListener('touchmove',e=>{
+  e.preventDefault();
+},{passive:false});
+</script>
+
 </body>
 </html>
