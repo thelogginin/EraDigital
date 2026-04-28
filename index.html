@@ -98,7 +98,7 @@
     /* Styling Tombol Install PWA */
     .install-btn {
       position: fixed;
-      bottom: 20px;
+      top: 20px; /* Diubah dari bottom menjadi top */
       right: 20px;
       background-color: #2E7D32;
       color: white;
@@ -269,15 +269,25 @@
     // 2. Logika Tombol Install
     let deferredPrompt;
     let isPwaReady = false;
+    let hideBtnTimeout; // Variabel untuk menyimpan timer
     const installBtn = document.getElementById('installBtn');
     const manualModal = document.getElementById('manualModal');
+
+    // Fungsi untuk menampilkan tombol sementara lalu menyembunyikannya setelah 1 menit (60000 ms)
+    function showInstallBtnTemporarily() {
+      installBtn.style.display = 'flex';
+      clearTimeout(hideBtnTimeout);
+      hideBtnTimeout = setTimeout(() => {
+        installBtn.style.display = 'none';
+      }, 60000); // 60.000 ms = 1 menit
+    }
 
     // Menangkap event install bawaan Chrome/Android
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
       isPwaReady = true;
-      installBtn.style.display = 'flex'; // Munculkan tombol
+      showInstallBtnTemporarily(); // Tampilkan dengan timer
     });
 
     // Menjalankan aksi klik pada tombol
@@ -300,13 +310,14 @@
     // Memaksa tombol Install muncul setelah 3 detik, berfungsi sebagai panduan manual
     setTimeout(() => {
       if (installBtn.style.display !== 'flex') {
-        installBtn.style.display = 'flex';
+        showInstallBtnTemporarily(); // Tampilkan dengan timer
       }
     }, 3000);
 
     // Menyembunyikan tombol secara permanen jika sudah terinstall
     window.addEventListener('appinstalled', () => {
       installBtn.style.display = 'none';
+      clearTimeout(hideBtnTimeout);
     });
 
     // Fungsi tutup modal
