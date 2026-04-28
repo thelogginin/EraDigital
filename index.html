@@ -98,8 +98,9 @@
     /* Styling Tombol Install PWA */
     .install-btn {
       position: fixed;
-      top: 20px; /* Diubah dari bottom menjadi top */
-      right: 20px;
+      top: 50%; /* Diubah untuk posisi tengah vertikal */
+      right: 20px; /* Tetap di sebelah kanan */
+      transform: translateY(-50%); /* Menyelaraskan tepat di tengah berdasarkan ukuran tombol */
       background-color: #2E7D32;
       color: white;
       border: none;
@@ -117,7 +118,7 @@
     }
 
     .install-btn:active {
-      transform: scale(0.95);
+      transform: translateY(-50%) scale(0.95); /* Menyesuaikan efek tekan dengan posisi Y */
     }
 
     /* Styling Modal Panduan Install Manual */
@@ -279,7 +280,7 @@
       clearTimeout(hideBtnTimeout);
       hideBtnTimeout = setTimeout(() => {
         installBtn.style.display = 'none';
-      }, 60000); // 60.000 ms = 1 menit
+      }, 30000); // 30.000 ms = 30 detik
     }
 
     // Menangkap event install bawaan Chrome/Android
@@ -307,12 +308,12 @@
       }
     });
 
-    // Memaksa tombol Install muncul setelah 3 detik, berfungsi sebagai panduan manual
+    // Memaksa tombol Install muncul setelah 10 detik, berfungsi sebagai panduan manual
     setTimeout(() => {
       if (installBtn.style.display !== 'flex') {
         showInstallBtnTemporarily(); // Tampilkan dengan timer
       }
-    }, 3000);
+    }, 10000);
 
     // Menyembunyikan tombol secara permanen jika sudah terinstall
     window.addEventListener('appinstalled', () => {
